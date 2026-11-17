@@ -5,7 +5,7 @@ const sqlite = require('sqlite3');
 
 const db = new sqlite.Database("my.db");
 
-db.exec('CREATE TABLE prueba (id INTEGER)');
+db.exec('CREATE TABLE grupos (id INTEGER,nombre TEXT, descripcion TEXT)');
 
 console.log("Node.JS y SQlite")
 
