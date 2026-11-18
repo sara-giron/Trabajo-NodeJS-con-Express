@@ -1,0 +1,32 @@
+extends ../layout
+include ../mixins
+
+block content
+  p
+    a(href="/mensajes") ← Volver a mensajes
+  h1.con-avatar
+    +avatar(otro)
+    | #{otro.nombre} #{otro.apellidos || ''}
+
+  //- #{} y = escapan el HTML: el contenido de los mensajes nunca se interpreta (anti-XSS)
+  .historial
+    each m in mensajes
+      .burbuja(class=(m.enviado_por_mi ? 'mia' : 'suya'))
+        p.texto= m.contenido
+        span.fecha
+          = m.fecha
+          if m.enviado_por_mi
+            = m.leido ? ' · Leído' : ' · Enviado'
+    else
+      p.nota Aún no hay mensajes. ¡Escribe el primero!
+
+  if aviso && aviso.error
+    p.error= aviso.error
+
+  if puedeEscribir
+    form.envio(method="post" action="/mensajes/" + otro.id)
+      input(type="hidden" name="_csrf" value=csrf)
+      textarea(name="contenido" maxlength=maxLongitud required rows="3" placeholder="Escribe un mensaje…")= aviso ? aviso.borrador : ''
+      button(type="submit") Enviar
+  else
+    p.nota Este usuario ya no está en tu grupo: puedes consultar el historial pero no responder.
