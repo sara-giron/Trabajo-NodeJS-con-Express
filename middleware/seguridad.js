@@ -1,6 +1,13 @@
 // Middlewares de seguridad compartidos.
 // CONTRATO con la parte de login: al iniciar sesión se debe guardar
 //   req.session.usuario = { id, nombre, rol }
+//
+// PARA EL GRUPO, cómo usarlos en vuestras rutas:
+//   const { requiereLogin, requiereAdmin } = require('../middleware/seguridad');
+//   router.use(requiereLogin);    // todas las rutas del fichero piden sesión
+//   router.use(requiereAdmin);    // y además ser admin (para altas/bajas)
+// El CSRF ya está activado para toda la app en app.js: solo tenéis que poner en
+// cada formulario POST:  input(type="hidden" name="_csrf" value=csrf)
 const crypto = require('crypto');
 
 // Exige sesión iniciada
