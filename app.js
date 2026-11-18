@@ -26,7 +26,10 @@ app.use(
 );
 app.use(csrf);
 
-// Datos disponibles en todas las vistas: usuario y nº de mensajes sin leer
+// PARA EL GRUPO: en todas las vistas Pug tenéis disponibles estas variables:
+//   usuarioSesion -> el usuario logueado ({ id, nombre, rol }) o null
+//   csrf          -> token para el campo oculto _csrf de los formularios POST
+//   noLeidos      -> nº de mensajes sin leer (lo usa el menú)
 app.use(async (req, res, next) => {
   res.locals.usuarioSesion = req.session.usuario || null;
   res.locals.noLeidos = 0;
@@ -39,10 +42,17 @@ app.use(async (req, res, next) => {
 });
 
 // --- Rutas ---
-app.use('/', require('./routes/login'));         // parte de login (compañero/a)
+// PARA EL GRUPO: descomentad vuestras rutas cuando las tengáis.
+//  - Login: tiene que tener GET /login, POST /login y POST /logout (el menú ya
+//    tiene el botón "Salir"). Al iniciar sesión guardad EXACTAMENTE:
+//      req.session.usuario = { id, nombre, rol };   // rol: 'admin' o 'usuario'
+//    Mis rutas leen el usuario de ahí y, si no hay sesión, redirigen a /login.
+//  - Admin: proteged las rutas con requiereLogin y requiereAdmin
+//    (están en middleware/seguridad.js).
+// app.use('/', require('./routes/login'));
+// app.use('/admin', require('./routes/admin'));
 app.use('/usuarios', require('./routes/usuarios'));
 app.use('/mensajes', require('./routes/mensajes'));
-// app.use('/admin', require('./routes/admin'));  // altas/bajas de usuarios y grupos (compañero/a)
 
 app.get('/', (req, res) => res.redirect(req.session.usuario ? '/mensajes' : '/login'));
 

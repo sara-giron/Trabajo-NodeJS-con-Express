@@ -38,7 +38,6 @@ models/usuarios.js        listado, compañeros de grupo, mismoGrupo
 models/mensajes.js        enviar, conversaciones, historial, marcarLeidos
 routes/usuarios.js        GET /usuarios, GET /usuarios/grupo
 routes/mensajes.js        GET /mensajes, GET /mensajes/:id, POST /mensajes/:id
-routes/login.js           login PROVISIONAL (se sustituye por el definitivo)
 views/                    plantillas Pug
 tests/                    pruebas con node:test
 ```
@@ -68,16 +67,23 @@ tests/                    pruebas con node:test
 - Consultas parametrizadas (`?`) contra inyección SQL.
 - Pug escapa el contenido (`=` / `#{}`), así que un mensaje con HTML no se ejecuta (XSS).
 - Token **CSRF** en todos los formularios POST y cookie de sesión `httpOnly` + `sameSite`.
-- Login con `session.regenerate()` (evita fijación de sesión) y contraseñas con bcrypt.
 - Longitud máxima del mensaje (1000) validada en código y en la propia tabla.
 
 ## Integración con el resto del grupo
 
-**Login** — al iniciar sesión hay que guardar exactamente:
+> El login todavía **no está** en esta rama: hasta que se añada, `/login` da 404 y
+> no se puede entrar en la web (las pruebas, `npm test`, sí funcionan).
+
+**Login** — rutas `GET /login`, `POST /login` y `POST /logout` (el menú ya tiene el
+botón "Salir"); registrarlas en `app.js`, donde está comentado. Al iniciar sesión hay
+que guardar exactamente:
 
 ```js
 req.session.usuario = { id, nombre, rol };   // rol: 'admin' | 'usuario'
 ```
+
+Recomendado: comprobar la contraseña con `bcrypt.compareSync` y llamar a
+`req.session.regenerate()` antes de guardar el usuario (evita la fijación de sesión).
 
 **Altas/bajas (admin)** — usar `requiereLogin, requiereAdmin` de `middleware/seguridad.js`,
 guardar la foto en `public/uploads/` y su nombre de fichero en `usuarios.foto`, y la

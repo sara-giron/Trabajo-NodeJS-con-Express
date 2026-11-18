@@ -1,6 +1,7 @@
 ### Pruebas con la extensión REST Client de VS Code
 ### 1) Abre http://localhost:3000/login en el navegador, inicia sesión y copia
 ###    la cookie "connect.sid" y el token CSRF (campo oculto _csrf del formulario).
+###    (Necesita el login de la parte de los compañeros.)
 @cookie = connect.sid=PEGAR_AQUI
 @csrf = PEGAR_AQUI
 
