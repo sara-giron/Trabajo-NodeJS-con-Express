@@ -1,0 +1,24 @@
+doctype html
+html(lang="es")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    title= title
+    link(rel="stylesheet" href="/stylesheets/style.css")
+  body
+    header.cabecera
+      a.marca(href="/") Gestión de usuarios
+      if usuarioSesion
+        nav
+          a(href="/usuarios") Usuarios
+          a(href="/usuarios/grupo") Mi grupo
+          a(href="/mensajes") Mensajes
+            if noLeidos > 0
+              span.globo= noLeidos
+          if usuarioSesion.rol === 'admin'
+            a(href="/admin") Administración
+          form.en-linea(method="post" action="/logout")
+            input(type="hidden" name="_csrf" value=csrf)
+            button.enlace(type="submit") Salir (#{usuarioSesion.nombre})
+    main.contenido
+      block content

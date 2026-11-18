@@ -1,0 +1,6 @@
+//- Avatar: foto si existe, si no las iniciales
+mixin avatar(u)
+  if u.foto
+    img.avatar(src="/uploads/" + u.foto alt="Foto de " + u.nombre)
+  else
+    span.avatar.iniciales= (u.nombre || '?').charAt(0).toUpperCase() + (u.apellidos ? u.apellidos.charAt(0).toUpperCase() : '')

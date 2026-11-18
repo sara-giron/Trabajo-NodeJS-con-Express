@@ -1,0 +1,42 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: #f4f5f7; color: #222; }
+a { color: #1f5fbf; }
+.cabecera { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  padding: .8rem 1.5rem; background: #1f2937; }
+.cabecera a, .cabecera .enlace { color: #fff; text-decoration: none; margin-left: 1rem; }
+.marca { font-weight: 700; margin-left: 0 !important; }
+.contenido { max-width: 900px; margin: 1.5rem auto; padding: 0 1rem; }
+.tarjeta { background: #fff; padding: 1.5rem; border-radius: 8px; }
+.estrecha { max-width: 360px; margin: 3rem auto; }
+label { display: block; margin-top: .8rem; }
+input, textarea { width: 100%; padding: .5rem; border: 1px solid #ccc; border-radius: 4px; font: inherit; }
+button, .boton { display: inline-block; margin-top: .8rem; padding: .45rem 1rem; border: 0; border-radius: 4px;
+  background: #1f5fbf; color: #fff; cursor: pointer; text-decoration: none; font: inherit; }
+.enlace { background: none; padding: 0; margin: 0; }
+.en-linea { display: inline; }
+.error { color: #b00020; }
+.nota { color: #666; }
+.tabla { width: 100%; border-collapse: collapse; background: #fff; }
+.tabla th, .tabla td { padding: .5rem; border-bottom: 1px solid #eee; text-align: left; }
+.tabla tr.yo { background: #eef4ff; }
+.tabla .boton { margin: 0; }
+.avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex: none; }
+.iniciales { display: inline-flex; align-items: center; justify-content: center; background: #c7d2fe; font-weight: 600; }
+.lista { list-style: none; padding: 0; }
+.lista li { display: flex; align-items: center; gap: .8rem; background: #fff; padding: .7rem 1rem; margin-bottom: .4rem; border-radius: 6px; }
+.lista li .boton { margin: 0 0 0 auto; }
+.lista li.pendiente { border-left: 4px solid #1f5fbf; }
+.resumen { flex: 1; display: flex; flex-direction: column; text-decoration: none; color: inherit; min-width: 0; }
+.nombre { font-weight: 600; }
+.extracto { color: #555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.etiqueta { font-size: .75rem; color: #8a5a00; }
+.fecha { font-size: .75rem; color: #888; }
+.globo { background: #d93025; color: #fff; border-radius: 999px; padding: 0 .5rem; font-size: .75rem; margin-left: .3rem; }
+.con-avatar { display: flex; align-items: center; gap: .6rem; }
+.historial { display: flex; flex-direction: column; gap: .5rem; background: #fff; padding: 1rem; border-radius: 8px;
+  max-height: 60vh; overflow-y: auto; }
+.burbuja { max-width: 75%; padding: .5rem .8rem; border-radius: 10px; }
+.burbuja .texto { margin: 0 0 .2rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.mia { align-self: flex-end; background: #dbeafe; }
+.suya { align-self: flex-start; background: #f1f1f1; }
+.envio { margin-top: 1rem; }
