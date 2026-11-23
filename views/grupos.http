@@ -1,0 +1,53 @@
+### Pruebas de grupos con la extensión REST Client de VS Code
+### 1) Inicia sesión como admin en el navegador y copia la cookie "connect.sid"
+###    y el token CSRF (campo oculto _csrf de cualquier formulario).
+@cookie = connect.sid=PEGAR_AQUI
+@csrf = PEGAR_AQUI
+
+### Listado de grupos
+GET http://localhost:3000/grupos
+Cookie: {{cookie}}
+
+### Alta de un grupo
+POST http://localhost:3000/grupos
+Cookie: {{cookie}}
+Content-Type: application/x-www-form-urlencoded
+
+_csrf={{csrf}}&nombre=Marketing&descripcion=Equipo de marketing
+
+### Alta con nombre repetido (debe mostrar "Ya existe un grupo con ese nombre")
+POST http://localhost:3000/grupos
+Cookie: {{cookie}}
+Content-Type: application/x-www-form-urlencoded
+
+_csrf={{csrf}}&nombre=Marketing
+
+### Detalle del grupo 1 (usuarios y formulario de asignar)
+GET http://localhost:3000/grupos/1
+Cookie: {{cookie}}
+
+### Asignar el usuario 5 al grupo 1 (si estaba en otro grupo, se cambia)
+POST http://localhost:3000/grupos/1/asignar
+Cookie: {{cookie}}
+Content-Type: application/x-www-form-urlencoded
+
+_csrf={{csrf}}&usuario_id=5
+
+### Quitar el usuario 5 del grupo 1
+POST http://localhost:3000/grupos/1/quitar
+Cookie: {{cookie}}
+Content-Type: application/x-www-form-urlencoded
+
+_csrf={{csrf}}&usuario_id=5
+
+### Baja del grupo 2 (sus usuarios se quedan sin grupo)
+POST http://localhost:3000/grupos/2/borrar
+Cookie: {{cookie}}
+Content-Type: application/x-www-form-urlencoded
+
+_csrf={{csrf}}
+
+### Sin token CSRF (debe devolver 403)
+POST http://localhost:3000/grupos/1/borrar
+Cookie: {{cookie}}
+Content-Type: application/x-www-form-urlencoded
