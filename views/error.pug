@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  section.tarjeta
+    h1= message
+    if error && error.stack
+      pre= error.stack
+    p
+      a(href="/") Volver al inicio

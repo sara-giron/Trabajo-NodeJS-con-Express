@@ -1,0 +1,23 @@
+extends ../layout
+include ../mixins
+
+block content
+  h1 Mensajes
+  ul.lista
+    each c in conversaciones
+      li(class=(c.no_leidos > 0 ? 'pendiente' : ''))
+        +avatar(c)
+        a.resumen(href="/mensajes/" + c.id)
+          span.nombre #{c.nombre} #{c.apellidos || ''}
+          if !c.mismo_grupo
+            span.etiqueta Ya no está en tu grupo
+          if c.ultimo_mensaje
+            span.extracto= c.ultimo_mensaje.length > 80 ? c.ultimo_mensaje.slice(0, 80) + '…' : c.ultimo_mensaje
+          else
+            span.extracto.nota Sin mensajes todavía
+        if c.fecha_ultimo
+          span.fecha= c.fecha_ultimo
+        if c.no_leidos > 0
+          span.globo= c.no_leidos
+    else
+      li.nota No tienes conversaciones. Si no tienes grupo asignado, contacta con el administrador.

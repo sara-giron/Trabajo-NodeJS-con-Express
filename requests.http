@@ -1,0 +1,43 @@
+### Pruebas con la extensión REST Client de VS Code
+### 1) Abre http://localhost:3000/login en el navegador, inicia sesión y copia
+###    la cookie "connect.sid" y el token CSRF (campo oculto _csrf del formulario).
+###    (Necesita el login de la parte de los compañeros.)
+@cookie = connect.sid=PEGAR_AQUI
+@csrf = PEGAR_AQUI
+
+### Listado de usuarios
+GET http://localhost:3000/usuarios
+Cookie: {{cookie}}
+
+### Usuarios de mi grupo
+GET http://localhost:3000/usuarios/grupo
+Cookie: {{cookie}}
+
+### Bandeja de mensajes
+GET http://localhost:3000/mensajes
+Cookie: {{cookie}}
+
+### Historial con el usuario 3
+GET http://localhost:3000/mensajes/3
+Cookie: {{cookie}}
+
+### Enviar mensaje al usuario 3 (mismo grupo -> redirige a la conversación)
+POST http://localhost:3000/mensajes/3
+Cookie: {{cookie}}
+Content-Type: application/x-www-form-urlencoded
+
+_csrf={{csrf}}&contenido=Hola desde REST Client
+
+### Enviar a un usuario de OTRO grupo (debe devolver 403)
+POST http://localhost:3000/mensajes/5
+Cookie: {{cookie}}
+Content-Type: application/x-www-form-urlencoded
+
+_csrf={{csrf}}&contenido=No debería llegar
+
+### Sin token CSRF (debe devolver 403)
+POST http://localhost:3000/mensajes/3
+Cookie: {{cookie}}
+Content-Type: application/x-www-form-urlencoded
+
+contenido=Sin token

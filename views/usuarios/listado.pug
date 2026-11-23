@@ -1,0 +1,34 @@
+extends ../layout
+include ../mixins
+
+block content
+  h1 Listado de usuarios
+  p.nota Puedes enviar mensajes solo a los usuarios de tu grupo.
+  table.tabla
+    thead
+      tr
+        th
+        th Nombre
+        th Usuario
+        if esAdmin
+          th Email
+          th Rol
+        th Grupo
+        th
+    tbody
+      each u in usuarios
+        tr(class=(u.id === yo.id ? 'yo' : ''))
+          td
+            +avatar(u)
+          td #{u.nombre} #{u.apellidos || ''}
+          td= u.usuario
+          if esAdmin
+            td= u.email
+            td= u.rol
+          td= u.grupo || 'Sin grupo'
+          td
+            if u.id !== yo.id && yo.grupo_id && u.grupo_id === yo.grupo_id
+              a.boton(href="/mensajes/" + u.id) Escribir
+      else
+        tr
+          td(colspan="7") No hay usuarios.

@@ -1,0 +1,17 @@
+extends ../layout
+include ../mixins
+
+block content
+  if !yo.grupo
+    h1 Mi grupo
+    p.nota No perteneces a ningún grupo. El administrador debe asignarte uno para poder enviar mensajes.
+  else
+    h1 Grupo: #{yo.grupo}
+    ul.lista
+      each u in companeros
+        li
+          +avatar(u)
+          span.nombre #{u.nombre} #{u.apellidos || ''}
+          a.boton(href="/mensajes/" + u.id) Enviar mensaje
+      else
+        li.nota Todavía no hay más usuarios en tu grupo.
