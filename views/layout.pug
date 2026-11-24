@@ -20,6 +20,7 @@ html(lang="es")
               span.globo= noLeidos
           if usuarioSesion.rol === 'admin'
             a(href="/admin") Administración
+            a(href="/grupos") Grupos
           form.en-linea(method="post" action="/logout")
             input(type="hidden" name="_csrf" value=csrf)
             button.enlace(type="submit") Salir (#{usuarioSesion.nombre})

@@ -53,6 +53,7 @@ app.use('/', require('./routes/login'));
 app.use('/admin', require('./routes/admin'));
 app.use('/usuarios', require('./routes/usuarios'));
 app.use('/mensajes', require('./routes/mensajes'));
+app.use('/grupos', require('./routes/grupos'));
 
 app.get('/', (req, res) => res.redirect(req.session.usuario ? '/mensajes' : '/login'));
 
