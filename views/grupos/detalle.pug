@@ -1,0 +1,43 @@
+extends ../layout
+
+block content
+  p
+    a(href="/grupos") ← Volver a grupos
+  h1 Grupo: #{grupo.nombre}
+  if grupo.descripcion
+    p.nota= grupo.descripcion
+
+  //- Usuarios que pertenecen al grupo
+  h2 Usuarios del grupo
+  table.tabla
+    tbody
+      each u in miembros
+        tr
+          td #{u.nombre} #{u.apellidos || ''}
+          td= u.usuario
+          td
+            form.en-linea(method="post" action="/grupos/" + grupo.id + "/quitar")
+              input(type="hidden" name="_csrf" value=csrf)
+              input(type="hidden" name="usuario_id" value=u.id)
+              button(type="submit") Quitar del grupo
+      else
+        tr
+          td.nota Este grupo no tiene usuarios.
+
+  //- Asignar un usuario al grupo
+  section.tarjeta
+    h2 Asignar usuario
+    if otros.length === 0
+      p.nota No hay más usuarios para asignar.
+    else
+      p.nota Cada usuario solo puede estar en un grupo: si ya tiene uno, se le cambia a este.
+      form(method="post" action="/grupos/" + grupo.id + "/asignar")
+        input(type="hidden" name="_csrf" value=csrf)
+        label(for="usuario_id") Usuario
+        select#usuario_id(name="usuario_id" required)
+          each u in otros
+            if u.grupo_actual
+              option(value=u.id) #{u.nombre} #{u.apellidos || ''} (ahora en #{u.grupo_actual})
+            else
+              option(value=u.id) #{u.nombre} #{u.apellidos || ''} (sin grupo)
+        button(type="submit") Asignar

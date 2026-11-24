@@ -1,0 +1,43 @@
+extends ../layout
+
+block content
+  h1 Grupos
+
+  //- Listado de grupos con su número de usuarios
+  table.tabla
+    thead
+      tr
+        th Nombre
+        th Descripción
+        th Usuarios
+        th
+    tbody
+      each g in grupos
+        tr
+          td
+            a(href="/grupos/" + g.id)= g.nombre
+          td= g.descripcion || ''
+          td= g.num_usuarios
+          td
+            //- Baja del grupo (POST con token CSRF)
+            form.en-linea(method="post" action="/grupos/" + g.id + "/borrar")
+              input(type="hidden" name="_csrf" value=csrf)
+              button(type="submit") Borrar
+      else
+        tr
+          td(colspan="4") Todavía no hay grupos.
+
+  p.nota Al borrar un grupo, sus usuarios no se borran: se quedan sin grupo.
+
+  //- Formulario de alta
+  section.tarjeta
+    h2 Nuevo grupo
+    if error
+      p.error= error
+    form(method="post" action="/grupos")
+      input(type="hidden" name="_csrf" value=csrf)
+      label(for="nombre") Nombre
+      input#nombre(type="text" name="nombre" value=nombre maxlength="50" required)
+      label(for="descripcion") Descripción
+      input#descripcion(type="text" name="descripcion" value=descripcion maxlength="200")
+      button(type="submit") Crear grupo
