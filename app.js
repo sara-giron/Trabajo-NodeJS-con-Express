@@ -26,10 +26,7 @@ app.use(
 );
 app.use(csrf);
 
-// PARA EL GRUPO: en todas las vistas Pug tenéis disponibles estas variables:
-//   usuarioSesion -> el usuario logueado ({ id, nombre, rol }) o null
-//   csrf          -> token para el campo oculto _csrf de los formularios POST
-//   noLeidos      -> nº de mensajes sin leer (lo usa el menú)
+// Variables para todas las vistas: usuarioSesion, csrf (lo pone el middleware) y noLeidos
 app.use(async (req, res, next) => {
   res.locals.usuarioSesion = req.session.usuario || null;
   res.locals.noLeidos = 0;
@@ -42,13 +39,6 @@ app.use(async (req, res, next) => {
 });
 
 // --- Rutas ---
-// PARA EL GRUPO: descomentad vuestras rutas cuando las tengáis.
-//  - Login: tiene que tener GET /login, POST /login y POST /logout (el menú ya
-//    tiene el botón "Salir"). Al iniciar sesión guardad EXACTAMENTE:
-//      req.session.usuario = { id, nombre, rol };   // rol: 'admin' o 'usuario'
-//    Mis rutas leen el usuario de ahí y, si no hay sesión, redirigen a /login.
-//  - Admin: proteged las rutas con requiereLogin y requiereAdmin
-//    (están en middleware/seguridad.js).
 app.use('/', require('./routes/login'));
 app.use('/admin', require('./routes/admin'));
 app.use('/usuarios', require('./routes/usuarios'));
