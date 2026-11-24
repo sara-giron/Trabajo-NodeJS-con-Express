@@ -1,11 +1,5 @@
-// Conexión única a SQLite con funciones que devuelven promesas (para usar async/await)
-//
-// PARA EL GRUPO, cómo usarla (siempre con ? para los datos, nunca concatenando texto):
-//   const db = require('../db/conexion');
-//   const filas = await db.all('SELECT * FROM grupos');                        // varias filas
-//   const fila  = await db.get('SELECT * FROM usuarios WHERE id = ?', [id]);   // una fila
-//   const res   = await db.run('INSERT INTO grupos (nombre) VALUES (?)', [nombre]);
-//   res.lastID -> id insertado, res.changes -> filas afectadas
+// Conexión única a SQLite con funciones que devuelven promesas (para usar async/await).
+// Los datos siempre van con ?, nunca concatenados en el SQL.
 const sqlite3 = require('sqlite3');
 const path = require('path');
 

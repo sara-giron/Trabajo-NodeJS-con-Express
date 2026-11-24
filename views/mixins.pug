@@ -1,6 +1,4 @@
-//- Avatar: foto si existe, si no las iniciales
-//- PARA EL GRUPO: la foto se busca en public/uploads/ con el nombre guardado en
-//- usuarios.foto, así que la subida de fotos debe guardarla ahí.
+//- Avatar: foto de public/uploads si tiene, si no las iniciales
 mixin avatar(u)
   if u.foto
     img.avatar(src="/uploads/" + u.foto alt="Foto de " + u.nombre)
