@@ -1,0 +1,39 @@
+extends ../layout
+include ../mixins
+
+block content
+  h1 Administración de usuarios
+  p
+    a.boton(href="/admin/usuarios/nuevo") Nuevo usuario
+
+  table.tabla
+    thead
+      tr
+        th
+        th Nombre
+        th Usuario
+        th Email
+        th Rol
+        th Grupo
+        th
+    tbody
+      each u in usuarios
+        tr
+          td
+            +avatar(u)
+          td #{u.nombre} #{u.apellidos || ''}
+          td= u.usuario
+          td= u.email || ''
+          td= u.rol
+          td= u.grupo || 'Sin grupo'
+          td
+            //- No se muestra el botón para uno mismo
+            if u.id !== yoId
+              form.en-linea(method="post" action="/admin/usuarios/" + u.id + "/borrar")
+                input(type="hidden" name="_csrf" value=csrf)
+                button(type="submit") Dar de baja
+      else
+        tr
+          td(colspan="7") No hay usuarios.
+
+  p.nota Al dar de baja a un usuario se borran también sus mensajes y su foto.

@@ -49,8 +49,8 @@ app.use(async (req, res, next) => {
 //    Mis rutas leen el usuario de ahí y, si no hay sesión, redirigen a /login.
 //  - Admin: proteged las rutas con requiereLogin y requiereAdmin
 //    (están en middleware/seguridad.js).
-// app.use('/', require('./routes/login'));
-// app.use('/admin', require('./routes/admin'));
+app.use('/', require('./routes/login'));
+app.use('/admin', require('./routes/admin'));
 app.use('/usuarios', require('./routes/usuarios'));
 app.use('/mensajes', require('./routes/mensajes'));
 

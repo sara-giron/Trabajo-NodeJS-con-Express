@@ -31,7 +31,7 @@ function csrf(req, res, next) {
   res.locals.csrf = req.session.csrf;
 
   if (req.method === 'POST') {
-    const enviado = (req.body && req.body._csrf) || req.get('x-csrf-token') || '';
+    const enviado = (req.body && req.body._csrf) || req.query._csrf || req.get('x-csrf-token') || '';
     const esperado = req.session.csrf;
     const valido =
       enviado.length === esperado.length &&

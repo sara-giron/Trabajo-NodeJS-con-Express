@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  p
+    a(href="/admin/usuarios") ← Volver a usuarios
+  section.tarjeta
+    h1 Nuevo usuario
+    if error
+      p.error= error
+
+    //- Con enctype multipart (para la foto) el token CSRF va en la URL del formulario
+    form(method="post" action="/admin/usuarios?_csrf=" + csrf enctype="multipart/form-data")
+      label(for="usuario") Usuario
+      input#usuario(type="text" name="usuario" value=datos.usuario maxlength="30" required)
+      label(for="password") Contraseña (mínimo 8 caracteres)
+      input#password(type="password" name="password" minlength="8" required)
+      label(for="nombre") Nombre
+      input#nombre(type="text" name="nombre" value=datos.nombre maxlength="50" required)
+      label(for="apellidos") Apellidos
+      input#apellidos(type="text" name="apellidos" value=datos.apellidos maxlength="100")
+      label(for="email") Email
+      input#email(type="email" name="email" value=datos.email)
+      label(for="rol") Rol
+      select#rol(name="rol")
+        option(value="usuario" selected=(datos.rol !== 'admin')) Usuario
+        option(value="admin" selected=(datos.rol === 'admin')) Administrador
+      label(for="foto") Foto (JPG, PNG o WEBP, máximo 2 MB)
+      input#foto(type="file" name="foto" accept="image/jpeg,image/png,image/webp")
+      button(type="submit") Crear usuario
